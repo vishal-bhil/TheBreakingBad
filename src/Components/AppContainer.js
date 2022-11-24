@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.black07,
-    paddingTop: 5,
+    // paddingTop: 5,
   },
   padding: {
     paddingHorizontal: Responsive.widthPx(5),
