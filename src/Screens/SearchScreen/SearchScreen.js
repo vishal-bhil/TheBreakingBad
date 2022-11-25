@@ -1,9 +1,15 @@
 import React, {useState} from 'react';
-import {View, TouchableOpacity, FlatList, TextInput} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {AppContainer, AppText} from '../../Components';
 import {Color, Loader, Utility} from '../../Helper';
-import styles from './SearchScreenStyle';
+import {
+  HeaderContainer,
+  SearchContainer,
+  SearchInput,
+  ListContainer,
+  ItemSeparator,
+} from './SearchScreenStyle';
 import CharacterItem from '../HomeScreen/Components/CharacterItem';
 import APICall from '../../Network/APICall';
 import EndPoints from '../../Network/EndPoints';
@@ -33,22 +39,21 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <AppContainer isPadding={false} isTopSafeArea={false}>
-      <View style={styles.headerContainer}>
-        <View style={styles.iconContainer}>
+      <HeaderContainer>
+        <SearchContainer>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Icon name="arrow-left" color={Color.white} size={25} />
           </TouchableOpacity>
 
-          <TextInput
+          <SearchInput
             placeholderTextColor={Color.greyAB}
             placeholder="Search"
             onChangeText={setSearchText}
             value={searchText}
-            style={styles.searchInput}
             returnKeyType="search"
             onSubmitEditing={searchCharactersList}
           />
-        </View>
+        </SearchContainer>
 
         <TouchableOpacity
           onPress={() => {
@@ -57,13 +62,13 @@ const HomeScreen = ({navigation}) => {
           }}>
           <Icon name="x" color={Color.white} size={25} />
         </TouchableOpacity>
-      </View>
+      </HeaderContainer>
 
-      <FlatList
+      <ListContainer
         data={charactersList}
         renderItem={renderCharacterItem}
         numColumns={2}
-        ItemSeparatorComponent={() => <View style={styles.ItemSeparator} />}
+        ItemSeparatorComponent={() => <ItemSeparator />}
         ListEmptyComponent={() => {
           return isEmptyResult ? (
             <View>
@@ -82,7 +87,6 @@ const HomeScreen = ({navigation}) => {
             </View>
           ) : null;
         }}
-        style={styles.listStyle}
       />
     </AppContainer>
   );

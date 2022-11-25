@@ -1,10 +1,14 @@
 import React from 'react';
-import {View, TouchableOpacity, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {useSelector} from 'react-redux';
 import {AppContainer, AppText} from '../../Components';
 import {Color} from '../../Helper';
-import styles from './FavoriteScreenStyle';
+import {
+  HeaderContainer,
+  FavoriteIcon,
+  ListContainer,
+  ItemSeparator,
+} from './FavoriteScreenStyle';
 import CharacterItem from '../HomeScreen/Components/CharacterItem';
 
 const FavoriteScreen = ({navigation}) => {
@@ -22,7 +26,7 @@ const FavoriteScreen = ({navigation}) => {
 
   return (
     <AppContainer isPadding={false}>
-      <View style={styles.headerContainer}>
+      <HeaderContainer>
         <AppText
           text="Favorites"
           fontSize="6"
@@ -30,17 +34,16 @@ const FavoriteScreen = ({navigation}) => {
           fontColor={Color.green75}
         />
 
-        <TouchableOpacity onPress={onBackPress} style={styles.favoriteIcon}>
+        <FavoriteIcon onPress={onBackPress}>
           <Icon name="x" color={Color.white} size={25} />
-        </TouchableOpacity>
-      </View>
+        </FavoriteIcon>
+      </HeaderContainer>
 
-      <FlatList
+      <ListContainer
         data={localCharacterList}
         renderItem={renderCharacterItem}
         numColumns={2}
-        ItemSeparatorComponent={() => <View style={styles.ItemSeparator} />}
-        style={styles.listStyle}
+        ItemSeparatorComponent={() => <ItemSeparator />}
       />
     </AppContainer>
   );

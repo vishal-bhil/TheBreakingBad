@@ -1,43 +1,48 @@
-import {StyleSheet, Platform} from 'react-native';
+import {Platform} from 'react-native';
+import styled from 'styled-components/native';
 import {Responsive, Color, Fonts} from '../../Helper';
 
-export default StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  headerContainer: {
-    backgroundColor: Color.grey24,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: Responsive.widthPx(5),
-    paddingVertical:
-      Platform.OS === 'android' ? Responsive.widthPx(2) : Responsive.widthPx(5),
-    paddingTop:
-      Platform.OS === 'android'
-        ? Responsive.widthPx(2)
-        : Responsive.widthPx(10),
-  },
-  searchInput: {
-    flex: 1,
-    fontFamily: Fonts.Roboto_Thin,
-    fontSize: Responsive.font(7),
-    color: Color.white,
-    marginVertical: 10,
-    marginStart: 5,
-  },
-  iconContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+const HeaderContainer = styled.View`
+  background-color: ${Color.grey24};
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-horizontal: ${Responsive.widthPx(5)};
+  padding-vertical: ${Platform.OS === 'android'
+    ? Responsive.widthPx(2)
+    : Responsive.widthPx(5)};
+  padding-top: ${Platform.OS === 'android'
+    ? Responsive.widthPx(2)
+    : Responsive.widthPx(10)};
+`;
 
-  listStyle: {
-    marginTop: 20,
-    paddingHorizontal: Responsive.widthPx(5),
-  },
-  ItemSeparator: {
-    marginTop: 20,
-  },
-});
+const SearchContainer = styled.View`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+`;
+const SearchInput = styled.TextInput`
+  flex: 1;
+  font-family: ${Fonts.Roboto_Thin};
+  font-size: ${Responsive.font(7)};
+  color: ${Color.white};
+  margin-vertical: 10;
+  margin-start: 5;
+`;
+
+const ListContainer = styled.FlatList`
+  margin-top: 20;
+  padding-horizontal: ${Responsive.widthPx(5)};
+`;
+
+const ItemSeparator = styled.View`
+  margin-top: 20;
+`;
+
+export {
+  HeaderContainer,
+  SearchContainer,
+  SearchInput,
+  ListContainer,
+  ItemSeparator,
+};

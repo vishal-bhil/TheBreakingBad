@@ -1,6 +1,5 @@
 import React, {memo} from 'react';
-import {StyleSheet, TouchableOpacity, Image, View} from 'react-native';
-
+import styled from 'styled-components/native';
 import {AppText} from '../../../Components';
 import {Responsive, Color, Screen} from '../../../Helper';
 
@@ -12,9 +11,9 @@ const HouseItem = props => {
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onItemPress}>
-      <Image source={{uri: item.img}} style={styles.characterImage} />
-      <View style={styles.nameContainer}>
+    <Container onPress={onItemPress}>
+      <CharacterImage source={{uri: item.img}} />
+      <NameContainer>
         <AppText
           text={item.name}
           fontColor={Color.white}
@@ -29,28 +28,25 @@ const HouseItem = props => {
           fontWeight="light"
           numberOfLines={1}
         />
-      </View>
-    </TouchableOpacity>
+      </NameContainer>
+    </Container>
   );
 };
 
 export default memo(HouseItem);
 
-const styles = StyleSheet.create({
-  container: {
-    overflow: 'hidden',
-    marginEnd: Responsive.widthPx(5),
-  },
-  characterImage: {
-    width: Responsive.widthPx(42),
-    height: Responsive.widthPx(60),
-    borderRadius: 10,
-  },
-  nameContainer: {
-    flex: 1,
-    marginTop: 5,
-  },
-  flex1: {
-    flex: 1,
-  },
-});
+const Container = styled.TouchableOpacity`
+  overflow: hidden;
+  margin-end: ${Responsive.widthPx(5)};
+`;
+
+const CharacterImage = styled.Image`
+  width: ${Responsive.widthPx(42)};
+  height: ${Responsive.widthPx(60)};
+  border-radius: 10;
+`;
+
+const NameContainer = styled.View`
+  flex: 1;
+  margin-top: 5;
+`;

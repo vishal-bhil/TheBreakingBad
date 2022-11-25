@@ -1,10 +1,23 @@
 import React, {memo} from 'react';
-import {Text} from 'react-native';
+import styled from 'styled-components/native';
 import {Responsive, Color, Fonts} from '../Helper';
 import PropTypes from 'prop-types';
 
 const AppText = (props: AppTextProps) => {
-  const {fontWeight, fontSize, fontColor, containerStyle, text} = props;
+  const {fontWeight, fontSize, text} = props;
+
+  var platformFontSize =
+    fontSize === '8'
+      ? Responsive.font(2.5)
+      : fontSize === '10'
+      ? Responsive.font(3)
+      : fontSize === '12'
+      ? Responsive.font(3.5)
+      : fontSize === '14'
+      ? Responsive.font(4)
+      : fontSize === '16'
+      ? Responsive.font(4.5)
+      : Responsive.font(fontSize);
 
   var platformFont = Fonts.Roboto_Bold;
   if (fontWeight === 'bold') {
@@ -15,31 +28,13 @@ const AppText = (props: AppTextProps) => {
     platformFont = Fonts.Roboto_Thin;
   }
 
-  return (
-    <Text
-      style={[
-        {
-          fontFamily: platformFont,
-          fontSize:
-            fontSize === '8'
-              ? Responsive.font(2.5)
-              : fontSize === '10'
-              ? Responsive.font(3)
-              : fontSize === '12'
-              ? Responsive.font(3.5)
-              : fontSize === '14'
-              ? Responsive.font(4)
-              : fontSize === '16'
-              ? Responsive.font(4.5)
-              : Responsive.font(fontSize),
-          color: fontColor || Color.black,
-        },
-        containerStyle,
-      ]}
-      {...props}>
-      {text}
-    </Text>
-  );
+  const TextStyle = styled.Text`
+    font-size: ${platformFontSize};
+    font-family: ${platformFont};
+    color: ${props.fontColor || Color.black};
+  `;
+
+  return <TextStyle {...props}>{text}</TextStyle>;
 };
 
 interface AppTextProps {

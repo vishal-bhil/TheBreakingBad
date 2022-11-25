@@ -1,22 +1,20 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import styled from 'styled-components/native';
 import AppNavigator from './Router/AppNavigator';
 import AppLoader from './Components/AppLoader';
 import {Loader} from './Helper';
 
+const Container = styled.View`
+  flex: 1;
+`;
+
 function StartComponent() {
   return (
-    <View style={styles.flexBox}>
+    <Container>
       <AppLoader ref={e => Loader.setLoader(e)} />
       <AppNavigator />
-    </View>
+    </Container>
   );
 }
 
 export default StartComponent;
-
-const styles = StyleSheet.create({
-  flexBox: {
-    flex: 1,
-  },
-});

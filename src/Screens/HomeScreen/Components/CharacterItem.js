@@ -1,6 +1,7 @@
 import React, {memo} from 'react';
-import {StyleSheet, TouchableOpacity, Image, View} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
+import styled from 'styled-components/native';
 import {setLocalCharacterList} from '../../../Store/characterSlice';
 import {AppText} from '../../../Components';
 import {Responsive, Color, Screen, SVGs} from '../../../Helper';
@@ -34,10 +35,10 @@ const HouseItem = props => {
   };
 
   return (
-    <TouchableOpacity style={styles.container(isEven)} onPress={onItemPress}>
-      <Image source={{uri: item.img}} style={styles.characterImage} />
-      <View style={styles.nameContainer}>
-        <View style={styles.flex1}>
+    <Container isEven={isEven} onPress={onItemPress}>
+      <CharacterImage source={{uri: item.img}} />
+      <NameContainer>
+        <NameSubContainer>
           <AppText
             text={item.name}
             fontColor={Color.white}
@@ -52,7 +53,7 @@ const HouseItem = props => {
             fontWeight="light"
             numberOfLines={1}
           />
-        </View>
+        </NameSubContainer>
 
         <TouchableOpacity onPress={onFavoritePress}>
           <WithLocalSvg
@@ -61,29 +62,30 @@ const HouseItem = props => {
             width={20}
           />
         </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
+      </NameContainer>
+    </Container>
   );
 };
 
 export default memo(HouseItem);
 
-const styles = StyleSheet.create({
-  container: isEven => ({
-    overflow: 'hidden',
-    marginStart: isEven ? 0 : Responsive.widthPx(6),
-  }),
-  characterImage: {
-    width: Responsive.widthPx(42),
-    height: Responsive.widthPx(60),
-    borderRadius: 10,
-  },
-  nameContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 5,
-  },
-  flex1: {
-    flex: 1,
-  },
-});
+const Container = styled.TouchableOpacity`
+  overflow: hidden;
+  margin-start: ${props => (props.isEven ? 0 : Responsive.widthPx(6))};
+`;
+
+const CharacterImage = styled.Image`
+  width: ${Responsive.widthPx(42)};
+  height: ${Responsive.widthPx(60)};
+  border-radius: 10;
+`;
+
+const NameContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 5;
+`;
+
+const NameSubContainer = styled.View`
+  flex: 1;
+`;

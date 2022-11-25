@@ -1,6 +1,19 @@
 import React, {memo} from 'react';
-import {StyleSheet, View, SafeAreaView} from 'react-native';
+import {View, SafeAreaView} from 'react-native';
+import styled from 'styled-components/native';
 import {Color, Responsive} from '../Helper';
+
+const ContainerView = styled.View`
+  flex: 1;
+  background-color: ${Color.black07};
+`;
+
+const SubContainerView = styled.View`
+  flex: 1;
+  background-color: ${Color.black07};
+  padding-horizontal: ${props =>
+    props.isPadding ? Responsive.widthPx(5) : Responsive.widthPx(0)};
+`;
 
 const AppContainer = props => {
   const {
@@ -13,25 +26,12 @@ const AppContainer = props => {
   const TopComponent = isTopSafeArea ? SafeAreaView : View;
   const BottomComponent = isBottomSafeArea ? SafeAreaView : View;
   return (
-    <View style={styles.container}>
+    <ContainerView>
       <TopComponent />
-      <View style={[styles.container, isPadding && styles.padding]}>
-        {children}
-      </View>
+      <SubContainerView isPadding={isPadding}>{children}</SubContainerView>
       <BottomComponent style={bottomStyle} />
-    </View>
+    </ContainerView>
   );
 };
 
 export default memo(AppContainer);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Color.black07,
-    // paddingTop: 5,
-  },
-  padding: {
-    paddingHorizontal: Responsive.widthPx(5),
-  },
-});

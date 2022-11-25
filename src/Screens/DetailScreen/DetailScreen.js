@@ -1,19 +1,25 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  FlatList,
-  ImageBackground,
-  Image,
-  ScrollView,
-} from 'react-native';
+import {View, TouchableOpacity, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {WithLocalSvg} from 'react-native-svg';
 import {useSelector, useDispatch} from 'react-redux';
 import {setLocalCharacterList} from '../../Store/characterSlice';
 import {AppContainer, AppScrollView, AppText} from '../../Components';
 import {Color, Loader, Utility, SVGs} from '../../Helper';
-import styles from './DetailScreenStyle';
+import {
+  BackgroundImage,
+  HeaderContainer,
+  ImageContainer,
+  CharacterImage,
+  SubContainer,
+  PotrayedContainer,
+  DOBContainer,
+  GiftIcon,
+  OccupationText,
+  AppearedText,
+  SeasonContainer,
+  ListStyle,
+} from './DetailScreenStyle';
 import CharacterItem from './Components/CharacterItem';
 import APICall from '../../Network/APICall';
 import EndPoints from '../../Network/EndPoints';
@@ -30,6 +36,7 @@ const DetailScreen = ({navigation, route}) => {
 
   useEffect(() => {
     getCharactersList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCharactersList = () => {
@@ -65,11 +72,10 @@ const DetailScreen = ({navigation, route}) => {
   return (
     <AppContainer isPadding={false} isTopSafeArea={false}>
       <AppScrollView>
-        <ImageBackground
+        <BackgroundImage
           source={{uri: characterItem.img}}
-          style={styles.imageBackground}
-          imageStyle={styles.imageStyle}>
-          <View style={styles.headerContainer}>
+          imageStyle={{opacity: 0.3, backgroundColor: Color.modalOverlay}}>
+          <HeaderContainer>
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Icon name="arrow-left" color={Color.white} size={25} />
             </TouchableOpacity>
@@ -84,12 +90,9 @@ const DetailScreen = ({navigation, route}) => {
                 width={25}
               />
             </TouchableOpacity>
-          </View>
-          <View style={styles.imageContainer}>
-            <Image
-              source={{uri: characterItem.img}}
-              style={styles.characterImage}
-            />
+          </HeaderContainer>
+          <ImageContainer>
+            <CharacterImage source={{uri: characterItem.img}} />
             <AppText
               text={characterItem.name}
               fontColor={Color.white}
@@ -111,10 +114,10 @@ const DetailScreen = ({navigation, route}) => {
               fontWeight="bold"
               numberOfLines={1}
             />
-          </View>
-        </ImageBackground>
-        <View style={styles.subContainer}>
-          <View style={styles.potrayedContainer}>
+          </ImageContainer>
+        </BackgroundImage>
+        <SubContainer>
+          <PotrayedContainer>
             <View>
               <AppText
                 text={'Potrayed'}
@@ -129,79 +132,69 @@ const DetailScreen = ({navigation, route}) => {
                 fontWeight="thin"
               />
             </View>
-            <View style={styles.dobContainer}>
+            <DOBContainer>
               <AppText
                 text={characterItem.birthday}
                 fontColor={Color.white}
                 fontSize="14"
                 fontWeight="thin"
               />
-              <Icon
-                name="gift"
-                color={Color.white}
-                size={15}
-                style={styles.marginStart10}
-              />
-            </View>
-          </View>
+              <GiftIcon name="gift" color={Color.white} size={15} />
+            </DOBContainer>
+          </PotrayedContainer>
 
-          <AppText
+          <AppearedText
             text={'Occupation'}
             fontColor={Color.green75}
             fontSize="14"
             fontWeight="bold"
-            containerStyle={styles.marginTop30}
           />
 
           {characterItem.occupation.map(occItem => {
             return (
-              <AppText
+              <OccupationText
                 text={occItem}
                 fontColor={Color.white}
                 fontSize="14"
                 fontWeight="thin"
-                containerStyle={styles.marginTop10}
               />
             );
           })}
 
-          <AppText
+          <AppearedText
             text={'Appeared in'}
             fontColor={Color.green75}
             fontSize="14"
             fontWeight="bold"
-            containerStyle={styles.marginTop30}
           />
           <ScrollView horizontal={true}>
             {characterItem.appearance.map(appItem => {
               return (
-                <View style={styles.seasonContainer}>
+                <SeasonContainer>
                   <AppText
                     text={`Season ${appItem}`}
                     fontColor={Color.white}
                     fontSize="14"
                     fontWeight="thin"
                   />
-                </View>
+                </SeasonContainer>
               );
             })}
           </ScrollView>
 
-          <AppText
+          <AppearedText
             text={'Other characters'}
             fontColor={Color.white}
             fontSize="7"
             fontWeight="bold"
-            containerStyle={styles.marginTop30}
           />
 
-          <FlatList
+          <ListStyle
             data={charactersList}
             renderItem={renderCharacterItem}
             horizontal
-            style={styles.listStyle}
           />
-        </View>
+        </SubContainer>
       </AppScrollView>
     </AppContainer>
   );
